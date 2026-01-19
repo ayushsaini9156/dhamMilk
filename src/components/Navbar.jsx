@@ -1,10 +1,35 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import useSmoothScroll from '../hooks/useSmoothScroll'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const { scrollToTop } = useSmoothScroll()
+  const rafRef = useRef(null)
+
+  useEffect(() => {
+    // Use requestAnimationFrame for smooth scroll handling
+    const handleScroll = () => {
+      if (rafRef.current) return // Throttle using RAF
+      
+      rafRef.current = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50)
+        rafRef.current = null
+      })
+    }
+    
+    // Passive listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll, { passive: true })
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [])
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -20,9 +45,17 @@ const Navbar = () => {
   return (
     <motion.nav 
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="bg-white/95 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b-2 border-primary-200/50 rounded-b-3xl"
+      animate={{ 
+        y: 0,
+        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.85)'
+      }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+        scrolled 
+          ? 'backdrop-blur-md border-primary-300/60 py-2' 
+          : 'backdrop-blur-sm border-white/40 py-0'
+      }`}
+      style={{ willChange: 'transform', transform: 'translateZ(0)' }}
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center py-5">

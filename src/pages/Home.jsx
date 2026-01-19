@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import PageTransition from '../components/PageTransition'
+import Button from '../components/Button'
 
 const Home = () => {
   const products = [
@@ -34,9 +36,10 @@ const Home = () => {
   }
 
   return (
-    <div>
-      {/* Hero Section with Milk Splash Background */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <PageTransition>
+      <div>
+        {/* Hero Section with Milk Splash Background */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden -mt-1">
         {/* Animated Background with Milk Splash Effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-primary-100 to-dairy-cream">
           {/* Milk Splash Circles */}
@@ -58,29 +61,6 @@ const Home = () => {
             transition={{ duration: 1.8, delay: 0.4, ease: "easeOut" }}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-dairy-butter rounded-full blur-3xl"
           />
-          
-          {/* Floating Milk Drops */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ y: 0, opacity: 0 }}
-              animate={{ 
-                y: [-20, 20, -20],
-                opacity: [0, 0.4, 0],
-              }}
-              transition={{
-                duration: 3 + i,
-                repeat: Infinity,
-                delay: i * 0.5,
-                ease: "easeInOut",
-              }}
-              className="absolute w-4 h-4 bg-white rounded-full"
-              style={{
-                left: `${15 + i * 15}%`,
-                top: `${20 + (i % 3) * 20}%`,
-              }}
-            />
-          ))}
         </div>
 
         {/* Hero Content */}
@@ -90,6 +70,84 @@ const Home = () => {
           animate="visible"
           className="relative z-10 container mx-auto px-4 text-center"
         >
+          {/* Animated Background Behind Text */}
+          <motion.div
+            className="absolute inset-0 -z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            {/* Animated Circles Behind Text */}
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-primary-300/30 to-emerald-300/30 rounded-full blur-2xl"
+            />
+            <motion.div
+              animate={{
+                scale: [1, 1.3, 1],
+                rotate: [360, 180, 0],
+                opacity: [0.15, 0.25, 0.15],
+              }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
+              className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-l from-orange-300/30 to-amber-300/30 rounded-full blur-2xl"
+            />
+            <motion.div
+              animate={{
+                scale: [1, 1.15, 1],
+                rotate: [0, -180, -360],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 22,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 4,
+              }}
+              className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-br from-accent-300/30 to-yellow-300/30 rounded-full blur-2xl"
+            />
+            
+            {/* Animated Lines */}
+            <motion.div
+              animate={{
+                scaleX: [0.8, 1.2, 0.8],
+                opacity: [0.05, 0.15, 0.05],
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-400/40 to-transparent"
+            />
+            <motion.div
+              animate={{
+                scaleX: [1.2, 0.8, 1.2],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3,
+              }}
+              className="absolute top-2/3 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-400/40 to-transparent"
+            />
+          </motion.div>
+
           {/* Emoji with Animation */}
           <motion.div
             variants={itemVariants}
@@ -124,7 +182,7 @@ const Home = () => {
               transition={{ delay: 0.8, duration: 0.6 }}
               className="bg-gradient-to-r from-primary-700 to-primary-500 bg-clip-text text-transparent"
             >
-              Delivered Daily
+              From Our Farm
             </motion.span>
           </motion.h1>
 
@@ -133,7 +191,7 @@ const Home = () => {
             variants={itemVariants}
             className="text-lg md:text-2xl text-gray-700 mb-10 max-w-3xl mx-auto font-medium"
           >
-            Farm-fresh quality delivered to your doorstep. Experience the pure taste of nature with every sip.
+            Discover our premium range of dairy products. Experience the pure taste of nature with every product.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -142,26 +200,15 @@ const Home = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <Link to="/products">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(14, 165, 233, 0.3)" }}
-                whileTap={{ scale: 0.98 }}
-                className="btn-primary px-10 py-4 text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all"
-              >
-                Shop Now
-              </motion.button>
+              <Button variant="primary" size="lg" className="px-10 py-4">
+                🥛 View Products
+              </Button>
             </Link>
             
-            <Link to="/products">
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  backgroundColor: "rgba(14, 165, 233, 0.1)",
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="btn-secondary px-10 py-4 text-lg font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-              >
-                Explore Products
-              </motion.button>
+            <Link to="/about">
+              <Button variant="secondary" size="lg" className="px-10 py-4">
+                📖 About Us
+              </Button>
             </Link>
           </motion.div>
 
@@ -266,7 +313,8 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </PageTransition>
   )
 }
 

@@ -3,25 +3,122 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    /* Performance optimizations for smooth scrolling */
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+  
   body {
-    @apply bg-gradient-to-br from-white via-primary-50 to-dairy-lightCream text-gray-900;
+    @apply bg-gradient-to-br from-dairy-milk via-orange-50 to-emerald-50 text-gray-800;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+    /* Performance optimizations */
+    transform: translateZ(0);
+    will-change: scroll-position;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    /* Prevent layout shift */
+    min-height: 100vh;
+  }
+  
+  /* GPU acceleration for smooth scrolling */
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  /* Optimize transforms for GPU */
+  [class*="motion-"],
+  [class*="animate-"] {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Prevent layout shifts on images */
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Smooth transitions only for transform and opacity */
+  * {
+    transition-property: transform, opacity;
+  }
+  
+  /* Custom scrollbar - optimized */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-50;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-primary-400 to-emerald-600;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gradient-to-b from-primary-500 to-emerald-700;
+  }
+  
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #34d399 #ecfdf5;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-400 to-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-primary-500 hover:to-primary-700 transition-all duration-200 shadow-md hover:shadow-lg;
+    @apply bg-gradient-to-r from-primary-500 via-primary-600 to-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:from-primary-600 hover:via-primary-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+    will-change: transform;
+    transform: translateZ(0);
   }
   
   .btn-secondary {
-    @apply bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold border-2 border-primary-400 hover:bg-primary-50 transition-all duration-200 shadow-sm hover:shadow-md;
+    @apply bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500 text-white px-6 py-3 rounded-xl font-bold hover:from-orange-500 hover:via-orange-600 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+    will-change: transform;
+    transform: translateZ(0);
   }
   
   .card {
-    @apply bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-primary-100;
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border border-white/60 hover:border-primary-300/60;
+    will-change: transform;
+    transform: translateZ(0);
   }
   
   .gradient-card {
-    @apply bg-gradient-to-br from-white to-dairy-cream rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300;
+    @apply bg-gradient-to-br from-white/95 via-dairy-cream/90 to-primary-50/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border border-white/50;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  
+  .glass-card {
+    @apply bg-white/30 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/40 hover:bg-white/40 transition-all duration-300;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+  
+  .creamy-gradient {
+    @apply bg-gradient-to-br from-dairy-milk via-dairy-cream to-primary-100;
+  }
+  
+  .milk-glass {
+    @apply bg-white/85 backdrop-blur-md border border-white/60 shadow-2xl;
+    will-change: transform;
+    transform: translateZ(0);
   }
 }

@@ -1,11 +1,29 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { products as productsData, categories } from '../data/products'
+import PageTransition from '../components/PageTransition'
+import SkeletonLoader from '../components/SkeletonLoader'
+import { useToast } from '../components/Toast'
+import AnimatedRating from '../components/AnimatedRating'
+import PriceBadge from '../components/PriceBadge'
 
 const Products = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [sortOrder, setSortOrder] = useState('default')
+  const [isLoading, setIsLoading] = useState(true)
+  const { success } = useToast()
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const handleAddToCart = (product) => {
+    success(`${product.name} added to cart! 🛒`)
+  }
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
@@ -66,11 +84,11 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-white via-primary-50 to-dairy-lightCream">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
+    <PageTransition>
+      <div className="min-h-screen py-12 bg-gradient-to-br from-white via-primary-50 to-dairy-lightCream">
+        <div className="container mx-auto px-4 lg:px-8">{/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
@@ -79,7 +97,7 @@ const Products = () => {
             Our Products
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Premium dairy products for your healthy lifestyle. Fresh from farm to table.
+            Explore our premium range of dairy products. Quality and freshness in every item.
           </p>
         </motion.div>
 
@@ -88,7 +106,7 @@ const Products = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-12 bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl p-6 lg:p-8 border border-primary-100"
+          className="mb-12 glass-card"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Search Input */}
@@ -159,7 +177,19 @@ const Products = () => {
 
         {/* Products Grid */}
         <AnimatePresence mode="wait">
-          {filteredProducts.length > 0 ? (
+          {isLoading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {[...Array(6)].map((_, i) => (
+                <SkeletonLoader key={i} type="product" />
+              ))}
+            </motion.div>
+          ) : filteredProducts.length > 0 ? (
             <motion.div
               key="products-grid"
               variants={containerVariants}
@@ -177,59 +207,71 @@ const Products = () => {
                   whileHover={{ y: -8, scale: 1.03 }}
                   className="gradient-card group cursor-pointer overflow-hidden"
                 >
-                  {/* Product Icon */}
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
-                    transition={{ duration: 0.5 }}
-                    className="text-7xl mb-4 text-center"
-                  >
-                    {product.icon}
-                  </motion.div>
+                  <Link to={`/product/${product.id}`} className="block">
+                    {/* Product Icon */}
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.5 }}
+                      className="text-7xl mb-4 text-center"
+                    >
+                      {product.icon}
+                    </motion.div>
 
-                  {/* Product Name */}
-                  <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-primary-600 transition-colors">
-                    {product.name}
-                  </h3>
+                    {/* Product Name */}
+                    <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-primary-600 transition-colors">
+                      {product.name}
+                    </h3>
 
-                  {/* Price */}
-                  <p className="text-3xl font-extrabold text-primary-600 mb-3">
-                    ${product.price.toFixed(2)}
-                  </p>
+                    {/* Rating */}
+                    <div className="mb-3">
+                      <AnimatedRating rating={product.rating} reviews={product.reviews} size="sm" />
+                    </div>
 
-                  {/* Category Badge */}
-                  <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-semibold mb-3">
-                    {product.category}
-                  </span>
+                    {/* Price */}
+                    <div className="mb-3">
+                      <PriceBadge 
+                        price={product.price} 
+                        originalPrice={product.price * 1.25} 
+                      />
+                    </div>
 
-                  {/* Description */}
-                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                    {product.description}
-                  </p>
+                    {/* Category Badge */}
+                    <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-semibold mb-3">
+                      {product.category}
+                    </span>
 
-                  {/* Features */}
-                  <ul className="space-y-2 mb-6">
-                    {product.features.map((feature, idx) => (
-                      <motion.li
-                        key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="flex items-center text-sm text-gray-700"
-                      >
-                        <span className="mr-2 text-primary-600 font-bold">✓</span>
-                        {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
+                    {/* Description */}
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                      {product.description}
+                    </p>
+
+                    {/* Features */}
+                    <ul className="space-y-2 mb-6">
+                      {product.features.map((feature, idx) => (
+                        <motion.li
+                          key={idx}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="flex items-center text-sm text-gray-700"
+                        >
+                          <span className="mr-2 text-primary-600 font-bold">✓</span>
+                          {feature}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </Link>
 
                   {/* Add to Cart Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="btn-primary w-full"
-                  >
-                    Add to Cart
-                  </motion.button>
+                  <Link to={`/product/${product.id}`} className="block">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="btn-primary w-full"
+                    >
+                      📄 View Details
+                    </motion.button>
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>
@@ -261,8 +303,9 @@ const Products = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </PageTransition>
   )
 }
 
