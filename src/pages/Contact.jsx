@@ -125,8 +125,8 @@ const Contact = () => {
             <div className="card">
               <h3 className="text-xl font-bold mb-4">📧 Email Us</h3>
               <p className="text-gray-700">
-                General: info@dairydelight.com<br />
-                Support: support@dairydelight.com
+                General: info@dham.com<br />
+                Support: support@dham.com
               </p>
             </div>
 

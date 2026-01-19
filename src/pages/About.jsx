@@ -10,7 +10,7 @@ const About = () => {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            About DairyDelight
+            About DHAM
           </h1>
           <p className="text-xl text-gray-600">
             Your trusted source for premium dairy products
@@ -26,7 +26,7 @@ const About = () => {
           >
             <h2 className="text-3xl font-bold mb-4">Our Story</h2>
             <p className="text-gray-700 text-lg leading-relaxed mb-4">
-              Founded in 2020, DairyDelight began with a simple mission: to bring
+              Founded in 2020, DHAM began with a simple mission: to bring
               farm-fresh, high-quality dairy products directly to your table. We
               partner with local farms committed to sustainable practices and animal
               welfare.

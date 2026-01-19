@@ -1,6 +1,6 @@
-# DairyDelight - Milk Products Website
+# DHAM - Premium Milk Products Website
 
-A modern React + Vite website for DairyDelight milk products, built with Tailwind CSS, React Router, and Framer Motion.
+A modern React + Vite website for DHAM milk products, built with Tailwind CSS, React Router, and Framer Motion.
 
 ## 🚀 Quick Start
 

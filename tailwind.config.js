@@ -23,7 +23,14 @@ export default {
           cream: '#FFF8DC',
           milk: '#F5F5DC',
           butter: '#FFE5B4',
+          lightCream: '#FFFEF0',
         }
+      },
+      backgroundImage: {
+        'cream-gradient': 'linear-gradient(135deg, #ffffff 0%, #FFF8DC 50%, #e0f2fe 100%)',
+        'blue-cream': 'linear-gradient(to right, #e0f2fe, #FFF8DC)',
+        'soft-dairy': 'linear-gradient(to bottom, #ffffff, #f0f9ff, #FFF8DC)',
+        'hero-gradient': 'linear-gradient(135deg, #bae6fd 0%, #7dd3fc 50%, #FFF8DC 100%)',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
