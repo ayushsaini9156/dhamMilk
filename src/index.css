@@ -10,74 +10,37 @@
   
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 100px;
-    /* Performance optimizations for smooth scrolling */
-    overflow-x: hidden;
-    overflow-y: scroll;
+    scroll-padding-top: 80px;
   }
   
   body {
-    @apply bg-gradient-to-br from-dairy-milk via-orange-50 to-emerald-50 text-gray-800;
-    background-attachment: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
-    /* Performance optimizations */
-    transform: translateZ(0);
-    will-change: scroll-position;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    /* Prevent layout shift */
-    min-height: 100vh;
+    background-color: #fefdfb;
+    color: #1c1917;
+    -webkit-overflow-scrolling: touch;
   }
   
-  /* GPU acceleration for smooth scrolling */
-  * {
-    scroll-behavior: smooth;
-  }
-  
-  /* Optimize transforms for GPU */
-  [class*="motion-"],
-  [class*="animate-"] {
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
-  
-  /* Prevent layout shifts on images */
   img {
     display: block;
     max-width: 100%;
     height: auto;
   }
   
-  /* Smooth transitions only for transform and opacity */
-  * {
-    transition-property: transform, opacity;
-  }
-  
-  /* Custom scrollbar - optimized */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-primary-50;
+    background-color: #f5f5f4;
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-primary-400 to-emerald-600;
-    border-radius: 10px;
+    background-color: #4ade80;
+    border-radius: 9999px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gradient-to-b from-primary-500 to-emerald-700;
-  }
-  
-  /* Firefox scrollbar */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #34d399 #ecfdf5;
+    background-color: #22c55e;
   }
 }
 
@@ -101,7 +64,7 @@
   }
   
   .gradient-card {
-    @apply bg-gradient-to-br from-white/95 via-dairy-cream/90 to-primary-50/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border border-white/50;
+    @apply bg-gradient-to-br from-white/95 via-cream-100/90 to-primary-50/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border border-white/50;
     will-change: transform;
     transform: translateZ(0);
   }
@@ -113,12 +76,25 @@
   }
   
   .creamy-gradient {
-    @apply bg-gradient-to-br from-dairy-milk via-dairy-cream to-primary-100;
+    @apply bg-gradient-to-br from-white via-cream-100 to-primary-100;
   }
   
   .milk-glass {
     @apply bg-white/85 backdrop-blur-md border border-white/60 shadow-2xl;
     will-change: transform;
     transform: translateZ(0);
+  }
+}
+
+@layer utilities {
+  .scale-103 {
+    transform: scale(1.03);
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

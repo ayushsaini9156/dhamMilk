@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 const Footer = () => {
-  const socialLinks = [
-    { name: 'Facebook', icon: '📘', url: 'https://facebook.com', color: 'hover:text-blue-400' },
-    { name: 'Twitter', icon: '🐦', url: 'https://twitter.com', color: 'hover:text-sky-400' },
-    { name: 'Instagram', icon: '📷', url: 'https://instagram.com', color: 'hover:text-pink-400' },
-    { name: 'YouTube', icon: '📺', url: 'https://youtube.com', color: 'hover:text-red-400' },
-    { name: 'LinkedIn', icon: '💼', url: 'https://linkedin.com', color: 'hover:text-blue-500' },
-  ]
+  const [email, setEmail] = useState('')
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    // Handle newsletter subscription
+    console.log('Subscribed:', email)
+    setEmail('')
+  }
 
   const quickLinks = [
     { name: 'Home', path: '/' },
@@ -17,210 +18,105 @@ const Footer = () => {
     { name: 'Contact', path: '/contact' },
   ]
 
+  const socialLinks = [
+    { name: 'Instagram', icon: '📷', url: 'https://www.instagram.com/dham_milk?igsh=MW5haTE4cW42NG1xYw==' },
+  ]
+
   return (
-    <footer className="relative bg-gradient-to-br from-gray-800 via-gray-900 to-primary-900 text-white py-12 mt-12">
-      {/* Gradient Top Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 via-orange-400 to-accent-400"></div>
-      
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Branding Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-2 mb-4"
-            >
-              <span className="text-4xl">🥛</span>
-              <h3 className="text-2xl font-display font-bold bg-gradient-to-r from-primary-300 via-accent-300 to-orange-300 bg-clip-text text-transparent">
-                DHAM
-              </h3>
-            </motion.div>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Premium quality dairy products showcased for your awareness. Experience the taste of purity.
+    <footer className="bg-gradient-to-b from-cream-100 to-beige-50 text-beige-900 border-t border-beige-200">
+      {/* Newsletter Section */}
+      <div className="bg-primary-50/50 border-b border-primary-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="max-w-2xl mx-auto text-center">
+            <h3 className="text-2xl font-display font-bold text-beige-900 mb-3">
+              Subscribe to Our Newsletter
+            </h3>
+            <p className="text-beige-600 mb-6">
+              Get the latest updates on our products and special offers
             </p>
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="inline-block"
-            >
-              <span className="px-4 py-2 bg-gradient-to-r from-primary-600 to-emerald-600 rounded-full text-sm font-semibold">
-                ✓ 100% Organic
-              </span>
-            </motion.div>
-          </motion.div>
-          
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="flex-1 px-4 py-3 rounded-lg bg-white text-beige-900 border border-beige-200 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent shadow-sm"
+              />
+              <button
+                type="submit"
+                className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 whitespace-nowrap shadow-soft hover:shadow-card"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <span className="text-3xl">🥛</span>
+              <h3 className="text-xl font-display font-bold text-primary-600">DHAM</h3>
+            </div>
+            <p className="text-beige-600 text-sm mb-4 leading-relaxed">
+              An upcoming dairy brand dedicated to providing fresh, pure, and hygienic milk products for everyday needs. Quality, trust, and consistent freshness you can rely on.
+            </p>
+          </div>
+
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-primary-300">Quick Links</h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <motion.li
-                  key={link.path}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
-                >
-                  <Link 
-                    to={link.path} 
-                    className="text-gray-300 hover:text-primary-300 transition-all inline-flex items-center gap-2 group"
+          <div>
+            <h4 className="font-semibold text-beige-900 mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    className="text-beige-600 hover:text-primary-600 text-sm transition-colors duration-200"
                   >
-                    <motion.span
-                      initial={{ x: 0 }}
-                      whileHover={{ x: 5 }}
-                      className="inline-block"
-                    >
-                      →
-                    </motion.span>
-                    <span className="group-hover:translate-x-1 transition-transform">
-                      {link.name}
-                    </span>
+                    {link.name}
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
-          
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-primary-300">Contact Us</h3>
-            <ul className="space-y-3 text-gray-300">
-              <motion.li
-                whileHover={{ x: 5 }}
-                className="flex items-start gap-2 transition-all"
-              >
-                <span className="text-xl">📧</span>
-                <a href="mailto:info@dham.com" className="hover:text-primary-300 transition-colors">
-                  info@dham.com
-                </a>
-              </motion.li>
-              <motion.li
-                whileHover={{ x: 5 }}
-                className="flex items-start gap-2 transition-all"
-              >
-                <span className="text-xl">📞</span>
-                <a href="tel:+15551234567" className="hover:text-primary-300 transition-colors">
-                  +1 (555) 123-4567
-                </a>
-              </motion.li>
-              <motion.li
-                whileHover={{ x: 5 }}
-                className="flex items-start gap-2 transition-all"
-              >
-                <span className="text-xl">📍</span>
-                <span>123 Dairy Street,<br />Fresh City, FC 12345</span>
-              </motion.li>
-              <motion.li
-                whileHover={{ x: 5 }}
-                className="flex items-start gap-2 transition-all"
-              >
-                <span className="text-xl">🕒</span>
-                <span>Mon-Fri: 8AM-6PM<br />Sat: 9AM-4PM</span>
-              </motion.li>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold text-beige-900 mb-4">Contact Us</h4>
+            <ul className="space-y-2 text-sm text-beige-600">
+              <li className="hover:text-primary-600 transition-colors duration-200">📧 dhammilkindustries@gmail.com</li>
+              <li className="hover:text-primary-600 transition-colors duration-200">📞 Contact via email</li>
+              <li className="hover:text-primary-600 transition-colors duration-200">📍 c/o Brijpalsingh, Agwan Khera, Sarsawa, Saharanpur (247232)</li>
             </ul>
-          </motion.div>
-          
-          {/* Social Media & Newsletter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-primary-300">Follow Us</h3>
-            <div className="flex gap-3 mb-6 flex-wrap">
-              {socialLinks.map((social, index) => (
-                <motion.a
+          </div>
+
+          {/* Social Media */}
+          <div>
+            <h4 className="font-semibold text-beige-900 mb-4">Follow Us</h4>
+            <div className="flex gap-3">
+              {socialLinks.map((social) => (
+                <a
                   key={social.name}
                   href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  whileTap={{ scale: 0.9 }}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className={`text-3xl ${social.color} transition-all p-2 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20`}
+                  className="w-10 h-10 bg-white border border-beige-200 hover:bg-primary-500 hover:border-primary-500 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-soft group"
                   aria-label={social.name}
                 >
-                  {social.icon}
-                </motion.a>
+                  <span className="text-xl group-hover:scale-110 transition-transform duration-200">{social.icon}</span>
+                </a>
               ))}
             </div>
-            
-            {/* Newsletter Signup */}
-            <div className="mt-6">
-              <h4 className="text-sm font-semibold mb-2 text-gray-300">Stay Updated</h4>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm"
-                />
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 bg-gradient-to-r from-primary-500 to-emerald-500 rounded-lg font-semibold text-sm hover:shadow-lg transition-shadow"
-                >
-                  Subscribe
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-        
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="border-t border-gray-700 pt-8"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
-            <p>
-              &copy; {new Date().getFullYear()} <span className="text-primary-300 font-semibold">DHAM</span>. All rights reserved. Made with 💚 for milk lovers.
-            </p>
-            <div className="flex gap-6">
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="#"
-                className="hover:text-primary-300 transition-all"
-              >
-                Privacy Policy
-              </motion.a>
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="#"
-                className="hover:text-primary-300 transition-all"
-              >
-                Terms of Service
-              </motion.a>
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="#"
-                className="hover:text-primary-300 transition-all"
-              >
-                Cookie Policy
-              </motion.a>
-            </div>
           </div>
-        </motion.div>
+        </div>
+
+        {/* Copyright */}
+        <div className="pt-8 border-t border-beige-200 text-center text-sm text-beige-500">
+          <p>&copy; {new Date().getFullYear()} DHAM. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   )

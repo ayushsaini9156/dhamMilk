@@ -299,9 +299,9 @@ const Contact = () => {
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-gray-800">Visit Us</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    123 Dairy Street<br />
-                    Fresh City, FC 12345<br />
-                    United States
+                    c/o Brijpalsingh<br />
+                    Agwan Khera, Sarsawa<br />
+                    Saharanpur (247232), Uttar Pradesh, India
                   </p>
                 </div>
               </div>
@@ -316,8 +316,8 @@ const Contact = () => {
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-gray-800">Call Us</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Phone: <a href="tel:+15551234567" className="text-primary-600 hover:underline">+1 (555) 123-4567</a><br />
-                    Toll Free: <a href="tel:1800DAIRY01" className="text-primary-600 hover:underline">1-800-DAIRY-01</a>
+                    Please contact us via email<br />
+                    We'll respond as soon as possible
                   </p>
                 </div>
               </div>
@@ -332,8 +332,8 @@ const Contact = () => {
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-gray-800">Email Us</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    General: <a href="mailto:info@dham.com" className="text-primary-600 hover:underline">info@dham.com</a><br />
-                    Support: <a href="mailto:support@dham.com" className="text-primary-600 hover:underline">support@dham.com</a>
+                    General: <a href="mailto:dhammilkindustries@gmail.com" className="text-primary-600 hover:underline">dhammilkindustries@gmail.com</a><br />
+                    We typically respond within 24 hours
                   </p>
                 </div>
               </div>
@@ -384,7 +384,7 @@ const Contact = () => {
                 </motion.div>
                 <div>
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">Our Location</h3>
-                  <p className="text-gray-600 text-lg">123 Dairy Street, Fresh City, FC 12345</p>
+                  <p className="text-gray-600 text-lg">Agwan Khera, Sarsawa, Saharanpur (247232)</p>
                   <motion.a
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

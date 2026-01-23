@@ -45,34 +45,22 @@ const About = () => {
 
   const timeline = [
     {
-      year: '2020',
+      year: '2026',
       title: 'The Beginning',
-      description: 'DHAM was founded with a vision to bring premium dairy products directly from local farms to families.',
+      description: 'Dham was founded with a vision to bring premium dairy products directly from local farms to families.',
       icon: '🌱'
     },
     {
-      year: '2021',
-      title: 'Rapid Growth',
-      description: 'Expanded partnerships with 50+ local farms and reached 10,000 satisfied customers.',
-      icon: '📈'
-    },
-    {
-      year: '2023',
-      title: 'Quality Certified',
-      description: 'Received organic certification and multiple quality awards for excellence in dairy products.',
-      icon: '🏆'
-    },
-    {
-      year: '2025',
-      title: 'Sustainability Leader',
-      description: 'Achieved 100% carbon-neutral delivery and zero-waste packaging across all products.',
-      icon: '♻️'
+      year: '2026',
+      title: 'Quality First',
+      description: 'Started with a commitment to deliver pure, fresh milk to 2000+ happy customers.',
+      icon: '🥛'
     },
     {
       year: '2026',
-      title: 'Community Impact',
-      description: 'Serving 100,000+ families daily and supporting sustainable farming communities.',
-      icon: '❤️'
+      title: 'Growing Strong',
+      description: 'Expanding our product range with three core products and building trust in the community.',
+      icon: '📈'
     }
   ]
 
@@ -140,7 +128,7 @@ const About = () => {
               About DHAM
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-              Your trusted partner for premium dairy products, delivered fresh from local farms to your table.
+              Dham Milk is an upcoming dairy brand dedicated to providing fresh, pure, and hygienic milk products for everyday needs. We focus on quality, trust, and consistent freshness—bringing customers dairy products they can rely on.
             </p>
           </motion.div>
         </div>
@@ -168,32 +156,32 @@ const About = () => {
                 <div className="gradient-card h-full p-8">
                   <h3 className="text-2xl font-bold mb-4 text-gray-800">The Beginning</h3>
                   <p className="text-gray-700 text-lg leading-relaxed mb-4">
-                    Founded in 2020, DHAM began with a simple but powerful mission: to reconnect families with the source of their food. We believed that everyone deserves access to fresh, high-quality dairy products that are both nutritious and sustainably produced.
+                    Founded in 2026, Dham Milk is an upcoming dairy brand dedicated to providing fresh, pure, and hygienic milk products for everyday needs. Currently in the early launch phase, Dham Milk focuses on quality, trust, and consistent freshness—bringing customers dairy products they can rely on.
                   </p>
                   <p className="text-gray-700 text-lg leading-relaxed">
-                    What started as a partnership with just three local farms has grown into a thriving network of over 50 sustainable farms across the region.
+                    Our website is designed to introduce the brand, showcase our upcoming product range, and share our commitment to clean production and high standards. Customers can explore product information, quality details, and our vision as we expand.
                   </p>
                 </div>
               </motion.div>
 
               <motion.div variants={fadeInUp}>
                 <div className="gradient-card h-full p-8 bg-gradient-to-br from-primary-50 to-orange-50">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-800">Today</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-800">Our Mission</h3>
                   <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                    Today, we serve over 100,000 families daily, ensuring that every product meets our rigorous standards for quality, freshness, and taste. Our commitment to sustainable farming and ethical practices has made us a leader in the dairy industry.
+                    Dham Milk aims to become a trusted name for families who value purity, nutrition, and authenticity in dairy products. We serve over 2,000 happy customers, ensuring that every product meets our rigorous standards for quality, freshness, and taste.
                   </p>
                   <div className="grid grid-cols-3 gap-4 text-center">
                     <div className="bg-white/80 rounded-xl p-4">
-                      <div className="text-3xl font-bold text-primary-600">100K+</div>
-                      <div className="text-sm text-gray-600">Daily Customers</div>
+                      <div className="text-3xl font-bold text-primary-600">2K+</div>
+                      <div className="text-sm text-gray-600">Happy Customers</div>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4">
-                      <div className="text-3xl font-bold text-orange-600">50+</div>
-                      <div className="text-sm text-gray-600">Partner Farms</div>
+                      <div className="text-3xl font-bold text-orange-600">3</div>
+                      <div className="text-sm text-gray-600">Products</div>
                     </div>
                     <div className="bg-white/80 rounded-xl p-4">
                       <div className="text-3xl font-bold text-emerald-600">100%</div>
-                      <div className="text-sm text-gray-600">Organic</div>
+                      <div className="text-sm text-gray-600">Pure</div>
                     </div>
                   </div>
                 </div>

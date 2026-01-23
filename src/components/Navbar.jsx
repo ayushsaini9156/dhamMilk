@@ -1,27 +1,23 @@
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
-import useSmoothScroll from '../hooks/useSmoothScroll'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
-  const { scrollToTop } = useSmoothScroll()
   const rafRef = useRef(null)
 
   useEffect(() => {
-    // Use requestAnimationFrame for smooth scroll handling
     const handleScroll = () => {
-      if (rafRef.current) return // Throttle using RAF
+      if (rafRef.current) return
       
       rafRef.current = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 50)
+        setScrolled(window.scrollY > 20)
         rafRef.current = null
       })
     }
     
-    // Passive listener for better performance
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => {
       window.removeEventListener('scroll', handleScroll, { passive: true })
@@ -31,175 +27,160 @@ const Navbar = () => {
     }
   }, [])
 
-  const navItems = [
+  const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/products', label: 'Products' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
   ]
 
-  const isActive = (path) => {
-    return location.pathname === path
-  }
+  const isActive = (path) => location.pathname === path
 
   return (
-    <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ 
-        y: 0,
-        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.85)'
-      }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-        scrolled 
-          ? 'backdrop-blur-md border-primary-300/60 py-2' 
-          : 'backdrop-blur-sm border-white/40 py-0'
+    <nav 
+      className={`sticky top-0 z-50 bg-white transition-all duration-250 ${
+        scrolled ? 'shadow-soft backdrop-blur-sm' : ''
       }`}
-      style={{ willChange: 'transform', transform: 'translateZ(0)' }}
     >
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center py-5">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <motion.div
-              whileHover={{ scale: 1.08, rotate: [0, -5, 5, 0] }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="flex items-center space-x-3 bg-gradient-to-br from-primary-100 to-dairy-cream px-4 py-2 rounded-2xl shadow-lg"
-            >
-              <span className="text-4xl">🥛</span>
-              <h1 className="text-2xl md:text-3xl font-display font-extrabold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent tracking-tight">
-                DHAM
-              </h1>
-            </motion.div>
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0">
+            <span className="text-3xl">🥛</span>
+            <h1 className="text-2xl font-display font-bold text-primary-600">
+              DHAM
+            </h1>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className="relative px-5 py-2.5 group"
+          {/* Desktop Search Bar */}
+          <div className="hidden md:flex flex-1 max-w-lg mx-8">
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-off-white border border-beige-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200"
+              />
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-beige-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <motion.span
-                  className={`text-base font-semibold transition-colors duration-300 ${
-                    isActive(item.path) 
-                      ? 'text-primary-600' 
-                      : 'text-gray-700 group-hover:text-primary-600'
-                  }`}
-                >
-                  {item.label}
-                </motion.span>
-                
-                {/* Animated underline */}
-                <motion.span
-                  className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full"
-                  initial={{ width: 0 }}
-                  whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  style={{ 
-                    width: isActive(item.path) ? '100%' : '0%',
-                  }}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-                
-                {/* Hover background */}
-                <motion.div
-                  className="absolute inset-0 bg-primary-50 rounded-2xl -z-10"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
-              </Link>
-            ))}
+              </svg>
+            </div>
           </div>
 
-          {/* Hamburger Menu Button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="md:hidden relative w-10 h-10 flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl shadow-md hover:shadow-lg transition-shadow"
-            onClick={() => setIsOpen(!isOpen)}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  isActive(link.path)
+                    ? 'text-primary-600'
+                    : 'text-beige-700 hover:text-primary-600'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            
+            {/* Account & Cart */}
+            <div className="flex items-center space-x-4 ml-4 pl-4 border-l border-beige-200">
+              <button
+                className="text-beige-700 hover:text-primary-600 transition-colors duration-200"
+                aria-label="Account"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </button>
+              
+              <Link
+                to="/products"
+                className="relative text-beige-700 hover:text-primary-600 transition-colors duration-200"
+                aria-label="Cart"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <span className="absolute -top-1 -right-1 bg-primary-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  0
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-beige-700 hover:text-primary-600 transition-colors"
             aria-label="Toggle menu"
           >
-            <motion.div
-              animate={isOpen ? "open" : "closed"}
-              className="flex flex-col items-center justify-center w-6 h-5"
-            >
-              <motion.span
-                variants={{
-                  closed: { rotate: 0, y: 0 },
-                  open: { rotate: 45, y: 8 }
-                }}
-                className="w-6 h-0.5 bg-primary-700 rounded-full mb-1.5 transition-all"
-              />
-              <motion.span
-                variants={{
-                  closed: { opacity: 1 },
-                  open: { opacity: 0 }
-                }}
-                className="w-6 h-0.5 bg-primary-700 rounded-full mb-1.5 transition-all"
-              />
-              <motion.span
-                variants={{
-                  closed: { rotate: 0, y: 0 },
-                  open: { rotate: -45, y: -8 }
-                }}
-                className="w-6 h-0.5 bg-primary-700 rounded-full transition-all"
-              />
-            </motion.div>
-          </motion.button>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
 
-        {/* Mobile Menu with AnimatePresence */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden overflow-hidden"
-            >
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="pb-6 pt-2 space-y-2 bg-gradient-to-b from-primary-50/50 to-dairy-cream/30 rounded-2xl px-4"
-              >
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.path}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -20, opacity: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      to={item.path}
-                      className={`block py-3 px-5 font-semibold rounded-2xl transition-all duration-200 ${
-                        isActive(item.path)
-                          ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
-                          : 'text-gray-700 hover:bg-white hover:text-primary-600 hover:shadow-md'
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <motion.span
-                        whileHover={{ x: 5 }}
-                        className="flex items-center"
-                      >
-                        {item.label}
-                      </motion.span>
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-beige-200">
+            {/* Mobile Search */}
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-off-white border border-beige-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400"
+              />
+            </div>
+            
+            {/* Mobile Links */}
+            <div className="space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${
+                    isActive(link.path)
+                      ? 'bg-primary-50 text-primary-600'
+                      : 'text-beige-700 hover:bg-off-white'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-    </motion.nav>
+    </nav>
   )
 }
 
